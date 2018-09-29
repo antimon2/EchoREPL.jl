@@ -1,0 +1,7 @@
+name = "EchoREPL"
+uuid = "455b544e-c3c1-11e8-1763-8dde3d5c09d7"
+authors = ["antimon2 <antimon2.me@gmail.com>"]
+version = "0.0.1"
+
+[deps]
+REPL = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
