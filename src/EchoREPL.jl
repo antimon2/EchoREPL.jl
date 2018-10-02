@@ -3,7 +3,7 @@ module EchoREPL
 import REPL
 import REPL.LineEdit
 
-do_cmd(repl, input) = println(input)
+do_cmd(repl, input) = println(REPL.outstream(repl), input)
 
 function create_mode(repl, main_mode)
     echo_mode = LineEdit.Prompt("echo> ";
@@ -82,6 +82,19 @@ function repl_init(repl)
     )
     main_mode.keymap_dict = LineEdit.keymap_merge(main_mode.keymap_dict, keymap)
     return
+end
+
+function __init__()
+    if isdefined(Base, :active_repl)
+        repl_init(Base.active_repl)
+    else
+        atreplinit() do repl
+            if isinteractive() && repl isa REPL.LineEditREPL
+                isdefined(repl, :interface) || (repl.interface = REPL.setup_interface(repl))
+                repl_init(repl)
+            end
+        end
+    end
 end
 
 end # module
